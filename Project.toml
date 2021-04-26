@@ -1,0 +1,17 @@
+name = "EoM_F463"
+uuid = "a94f4e4f-ca32-45d2-8c0e-26c88803d88c"
+authors = ["BPMinaker <bminaker@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+EoM = "25d7ee20-f19a-11e8-093a-7b526cbd2d90"
+EoM_X3D = "29d18a9a-f19a-11e8-3142-81fd2672d0ac"
+Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
+JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+OrdinaryDiffEq = "1dea7af3-3e70-54e6-95c3-0bf5283fa5ed"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+Roots = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
