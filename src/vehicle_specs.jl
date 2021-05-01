@@ -45,8 +45,11 @@ Base.@kwdef mutable struct props
 	# Zr::Float64 = 0
 
     # tire model
-	a_mtm::Vector{Float64} = [1.6929,-55.2084,1271.28,1601.8,6.4946,4.7966E-3,-0.3875,1,-4.5399E-2,4.2832E-3,8.6536E-2,-7.973,-0.2231,7.668,45.8764]
-	b_mtm::Vector{Float64} = [1.65,-7.6118,1122.6,-7.36E-3,144.82,-7.6614E-2,-3.86E-3,8.5055E-2,7.5719E-2,2.3655E-2,2.3655E-2]
+#	a_mtm::Vector{Float64} = [1.6929,-55.2084,1271.28,1601.8,6.4946,4.7966E-3,-0.3875,1,-4.5399E-2,4.2832E-3,8.6536E-2,-7.973,-0.2231,7.668,45.8764]
+#	b_mtm::Vector{Float64} = [1.65,-7.6118,1122.6,-7.36E-3,144.82,-7.6614E-2,-3.86E-3,8.5055E-2,7.5719E-2,2.3655E-2,2.3655E-2]
+
+	a_mtm::Vector{Float64} = [1.6929,-55.2084E-6,1.27128,1601.8*180/pi,6494.6,4.7966E-3*180/pi,-0.3875E-3,1.0]
+	b_mtm::Vector{Float64} = [1.65,-7.6118E-6,1.1226,-7.36E-7,14.482,-7.6614E-5,-3.86E-9,8.5055E-5,7.5719E-2]
 
 	g::Float64 = 9.81
 
@@ -63,8 +66,6 @@ Base.@kwdef mutable struct props
 	fbf::Float64 = 0.65 # front brake fraction, from 0 to 1
 
 	acc_lat_max::Float64 =0.3 # [g's] maximum lateral acceleration
-	acc_brake_max::Float64 = 0.3 # [g's] maximum braking acceleration
-	acc_drive_max::Float64 = 0.3 # [g's] maximum driving acceleration
 	maxv::Float64 = 100. # Driver model max allowed speed (m/s)
 
 	course::Array{Float64,2} = [0 0;0 0]
