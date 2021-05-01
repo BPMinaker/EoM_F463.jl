@@ -17,6 +17,16 @@ function input_F463(params;u=0)
     params.a=params.wb*(1-params.fwf)
     params.b=params.wb*params.fwf
 
+    half_weight = params.mass * params.g / 2
+    Zf = half_weight * params.fwf
+    Zr = half_weight - Zf
+
+    cf = params.a_mtm[4] * sin(2 * atan(Zf / params.a_mtm[5]))
+    cr = params.a_mtm[4] * sin(2 * atan(Zr / params.a_mtm[5]))
+
+    df = (params.b_mtm[4] * Zf ^ 2 + params.b_mtm[5] * Zf) * exp(-params.b_mtm[6] * Zf)
+    dr = (params.b_mtm[4] * Zr ^ 2 + params.b_mtm[5] * Zr) * exp(-params.b_mtm[6] * Zr)
+
     the_system = mbd_system("Full Car F463")
 
     item = body("Chassis")
@@ -124,15 +134,27 @@ function input_F463(params;u=0)
     item.rolling_axis = [0,1,0]
     push!(the_system.item,item)
 
-    item = flex_point("LF Tire")
-    item.body[1] = "LF Wheel+hub"
-    item.body[2] = "ground"
-    item.location = [params.a,params.front.t/2,0]
-    item.damping = [10,0]
-    item.forces = 2
-    item.moments = 0
-    item.axis = [0,0,1]
-#    push!(the_system.item,item)
+    if u > 0
+        item = flex_point("LF Tire")
+        item.body[1] = "LF Wheel+hub"
+        item.body[2] = "ground"
+        item.location = [params.a,params.front.t/2,0]
+        item.damping = [cf/u,0]
+        item.forces = 1
+        item.moments = 0
+        item.axis = [0,1,0]
+        push!(the_system.item,item)
+
+        item = flex_point("LF Tire")
+        item.body[1] = "LF Wheel+hub"
+        item.body[2] = "ground"
+        item.location = [params.a,params.front.t/2,0]
+        item.damping = [df/u,0]
+        item.forces = 1
+        item.moments = 0
+        item.axis = [1,0,0]
+        push!(the_system.item,item)
+    end
 
     item = link("LF Tie-rod")
     item.body[1] = "Chassis"
@@ -306,16 +328,27 @@ function input_F463(params;u=0)
     item.rolling_axis = [0,1,0]
     push!(the_system.item,item)
 
-    item = flex_point("LR Tire")
-    item.body[1] = "LR Wheel+hub"
-    item.body[2] = "ground"
-    item.location = [-params.b,params.rear.t/2,0]
-    item.damping = [10,0]
-    item.forces = 2
-    item.moments = 0
-    item.axis = [0,0,1]
-#    push!(the_system.item,item)
+    if u > 0
+        item = flex_point("LR Tire")
+        item.body[1] = "LR Wheel+hub"
+        item.body[2] = "ground"
+        item.location = [-params.b,params.rear.t/2,0]
+        item.damping = [cr/u,0]
+        item.forces = 1
+        item.moments = 0
+        item.axis = [0,1,0]
+        push!(the_system.item,item)
 
+        item = flex_point("LR Tire")
+        item.body[1] = "LR Wheel+hub"
+        item.body[2] = "ground"
+        item.location = [-params.b,params.rear.t/2,0]
+        item.damping = [dr/u,0]
+        item.forces = 1
+        item.moments = 0
+        item.axis = [1,0,0]
+        push!(the_system.item,item)
+    end
 
     item = link("LR Tie-rod")
     item.body[1] = "Chassis"
