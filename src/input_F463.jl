@@ -206,15 +206,14 @@ function input_F463(params;u=0)
     item.axis = [1,0,0]
     push!(the_system.item,item)
 
-
     item = body("LF Anti-roll arm")
-    item.location = params.front.sle + [-0.25,0,-0.05] + [params.a,params.front.t/2,0]
+    item.location = [params.a-0.25,0.5,params.front.sle[3]-0.05]
     push!(the_system.item,item)
 
     item = rigid_point("LF Anti-roll arm pivot")
     item.body[1] = "Chassis"
     item.body[2] = "LF Anti-roll arm"
-    item.location = params.front.sle + [-0.25,0,-0.05] + [params.a,params.front.t/2,0]
+    item.location = [params.a-0.25,0.5,params.front.sle[3]-0.05]
     item.forces = 3
     item.moments = 2
     item.axis = [0,1,0]
@@ -224,7 +223,7 @@ function input_F463(params;u=0)
     item.body[1] = "LF Lower A-arm"
     item.body[2] = "LF Anti-roll arm"
     item.location[1] = params.front.sle + [params.a,params.front.t/2,0]
-    item.location[2] = params.front.sle + [0,0,-0.1]  + [params.a,params.front.t/2,0]
+    item.location[2] = params.front.sle + [0,0,-0.05]  + [params.a,params.front.t/2,0]
     push!(the_system.item,item)
 
     item = spring("LF Suspension spring")
@@ -239,12 +238,11 @@ function input_F463(params;u=0)
     item=spring("Front anti-roll bar")
     item.body[1]="LF Anti-roll arm"
     item.body[2]="RF Anti-roll arm"
-    item.location[1] = params.front.sle + [-0.25,-0.05,-0.05] + [params.a,params.front.t/2,0]
+    item.location[1] = [params.a-0.25,0.45,params.front.sle[3]-0.05]
     item.location[2] = item.location[1] .* [1,-1,1] 
     item.stiffness = params.front.kr
     item.twist = 1
     push!(the_system.item,item)
-
 
     item=actuator("LF Tire X")
     item.body[1]="LF Wheel+hub"
@@ -400,15 +398,14 @@ function input_F463(params;u=0)
     item.axis = [1,0,0]
     push!(the_system.item,item)
 
-
     item = body("LR Anti-roll arm")
-    item.location = params.rear.sle + [0.25,0,-0.05] + [-params.b,params.rear.t/2,0]
+    item.location = [-params.b+0.25,0.5,params.rear.sle[3]-0.05]
     push!(the_system.item,item)
 
     item = rigid_point("LR Anti-roll arm pivot")
     item.body[1] = "Chassis"
     item.body[2] = "LR Anti-roll arm"
-    item.location = params.rear.sle + [0.25,0,-0.05] + [-params.b,params.rear.t/2,0]
+    item.location = [-params.b+0.25,0.5,params.rear.sle[3]-0.05]
     item.forces = 3
     item.moments = 2
     item.axis = [0,1,0]
@@ -418,7 +415,7 @@ function input_F463(params;u=0)
     item.body[1] = "LR Lower A-arm"
     item.body[2] = "LR Anti-roll arm"
     item.location[1] = params.rear.sle + [-params.b,params.rear.t/2,0]
-    item.location[2] = params.rear.sle + [0,0,-0.1]  + [-params.b,params.rear.t/2,0]
+    item.location[2] = params.rear.sle + [0,0,-0.05]  + [-params.b,params.rear.t/2,0]
     push!(the_system.item,item)
 
     item = spring("LR Suspension spring")
@@ -433,12 +430,11 @@ function input_F463(params;u=0)
     item=spring("Rear anti-roll bar")
     item.body[1] = "LR Anti-roll arm"
     item.body[2] = "RR Anti-roll arm"
-    item.location[1] = params.rear.sle + [0.25,-0.05,-0.05] + [-params.b,params.rear.t/2,0]
+    item.location[1] = [-params.b+0.25,0.45,params.rear.sle[3]-0.05]
     item.location[2] = item.location[1] .* [1,-1,1] 
     item.stiffness = params.rear.kr
     item.twist = 1
     push!(the_system.item,item)
-
 
     item=actuator("LR Tire X")
     item.body[1]="LR Wheel+hub"
