@@ -1,4 +1,4 @@
-function F463_animate(lptime, nums, params; filename = "history.html")
+function F463_animate(lptime, nums; filename = "history.html")
 
     ##
     ## This program is free software; you can redistribute it and/or modify it
@@ -13,8 +13,10 @@ function F463_animate(lptime, nums, params; filename = "history.html")
     ##
 
     println("Writing animation...")
+    params = props()
+    track!(params)
 
-    # # file name and track path for animation
+    # file name and track path for animation
     track = [params.course[:, 1:2] zeros(size(params.course))]
 
     nt = length(lptime)

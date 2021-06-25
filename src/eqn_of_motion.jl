@@ -106,13 +106,19 @@ function eqn_of_motion(zdot, z, params, t; flag = false)
         [params.front.kt, params.rear.kt, params.front.kt, params.rear.kt] .* wheel_bounce  # Compute normal forces
 
     # display(nrm_frc)
+    vert_frc = zeros(length(nrm_frc))
+    for i in 1:length(nrm_frc)
+        if nrm_frc[i] < 0 
+            vert_frc[i] = -nrm_frc[i] # Add in the positve vertical tire force on the wheel to cancel the tension in the tire
+            nrm_frc[i] = eps(1.0) # Set nrm_frc to almost zero so tire surface forces go to almost zero, not zero to avoid div by zero error in tire model 
+        end
+    end
 
     v_lat = params.g_mtx[params.lat_sen_num, :] * wmin  # Calculate slip angles from lateral speed sensors
     v_long = params.g_mtx[params.long_sen_num, :] * wmin  # Calculate slip ratios from long speed sensors
 
     pp && println("v: ", v_lat)
     pp && println("u: ", v_long)
-
 
     v_lat -= wheel_vel[1, :] .* sin.([delta, 0, delta, 0] .+ steer)   # Add steer to slip  # how to know 1,3 are front wheels???  fix me...
 
@@ -208,20 +214,18 @@ function eqn_of_motion(zdot, z, params, t; flag = false)
     # reduce all the forces to minimal coordinates
     fnlmin = -params.f_mtx[:, params.inertial_act_num] * params.mass * vel[1] * ang_vel[3] # Ficticious lateral force  
 
-    femin = params.f_mtx[:, params.lat_act_num] * lat_frc # Treat tire forces as external
-
-    ftracmin = params.f_mtx[:, params.long_act_num] * long_frc
+    femin = params.f_mtx[:, params.lat_act_num] * lat_frc     # Treat tire forces as external
+    femin += params.f_mtx[:, params.long_act_num] * long_frc
+    femin += params.f_mtx[:, params.vert_act_num] * vert_frc
 
     fimin = -params.k_mtx * pmin - params.l_mtx * pmindot  # Internal stiffness and damping
 
     fdmin = params.f_mtx[:, params.torque_act_num] * ax_tq  # Apply torque to drive axles
-
     fbrakemin = -params.f_mtx[:, params.brake_act_num] * brake_tq   # Apply torque to brakes
-
     fres = params.f_mtx[:, params.aero_act_num] * -faero # Aero drag
 
     # Find accelerations in reduced coordinates
-    wmindot = params.m_mtx \ (fnlmin + femin + fimin + fres + fdmin + ftracmin + fbrakemin)
+    wmindot = params.m_mtx \ (fnlmin + femin + fimin + fres + fdmin + fbrakemin)
 
     if pp
         temp = params.r_orth * wmindot

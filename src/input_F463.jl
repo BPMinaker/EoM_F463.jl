@@ -78,8 +78,8 @@ function input_F463(params;u=0)
     item.body[2]="ground"
     item.location[1] = [0,0,params.hg]
     item.location[2] = [-0.1,0,params.hg]
-    item.twist=1
-    item.gain=180/pi
+    item.twist = 1
+    item.gain = 180/pi
     push!(the_system.item,item)
 
     item=sensor("Chassis θ")
@@ -87,8 +87,8 @@ function input_F463(params;u=0)
     item.body[2]="ground"
     item.location[1] = [0,0,params.hg]
     item.location[2] = [0,-0.1,params.hg]
-    item.twist=1
-    item.gain=180/pi
+    item.twist = 1
+    item.gain = 180/pi
     push!(the_system.item,item)
 
     item=sensor("Chassis ψ")
@@ -96,8 +96,8 @@ function input_F463(params;u=0)
     item.body[2]="ground"
     item.location[1] = [0,0,params.hg]
     item.location[2] = [0,0,params.hg-0.1]
-    item.twist=1
-    item.gain=180/pi
+    item.twist = 1
+    item.gain = 180/pi
     push!(the_system.item,item)
 
     item = body("LF Wheel+hub")
@@ -258,6 +258,13 @@ function input_F463(params;u=0)
     item.location[2] = [params.a,params.front.t/2-0.1,0]
     push!(the_system.item,item)
 
+    item=actuator("LF Tire Z")
+    item.body[1]="LF Wheel+hub"
+    item.body[2]="ground"
+    item.location[1] = [params.a,params.front.t/2,0]
+    item.location[2] = [params.a,params.front.t/2,-0.1]
+    push!(the_system.item,item)
+
     item = actuator("LF brake")
     item.body[1] = "LF Wheel+hub"
     item.body[2] = "LF Upright"
@@ -290,7 +297,12 @@ function input_F463(params;u=0)
     item.order = 2
     push!(the_system.item,item)
 
-
+    item = sensor("LF Tire z")
+    item.body[1]="LF Wheel+hub"
+    item.body[2]="ground"
+    item.location[1] = [params.a,params.front.t/2,0]
+    item.location[2] = [params.a,params.front.t/2,-0.1]
+    push!(the_system.item,item)
 
     item = body("LR Wheel+hub")
     item.moments_of_inertia = [0,params.Iw,0]
@@ -450,6 +462,13 @@ function input_F463(params;u=0)
     item.location[2] = [-params.b,params.rear.t/2-0.1,0]
     push!(the_system.item,item)
 
+    item=actuator("LR Tire Z")
+    item.body[1]="LR Wheel+hub"
+    item.body[2]="ground"
+    item.location[1] = [-params.b,params.rear.t/2,0]
+    item.location[2] = [-params.b,params.rear.t/2,-0.1]
+    push!(the_system.item,item)
+
     item = actuator("LR brake")
     item.body[1] = "LR Wheel+hub"
     item.body[2] = "LR Upright"
@@ -482,10 +501,16 @@ function input_F463(params;u=0)
     item.order = 2
     push!(the_system.item,item)
 
+    item = sensor("LR Tire z")
+    item.body[1]="LR Wheel+hub"
+    item.body[2]="ground"
+    item.location[1] = [-params.b,params.rear.t/2,0]
+    item.location[2] = [-params.b,params.rear.t/2,-0.1]
+    push!(the_system.item,item)
+
+
     # reflect all LF or LR items in y axis
     mirror!(the_system)
-
-
 
     the_system
 

@@ -556,14 +556,14 @@ function track!(params)
     params.course[2:end, 4] = diff(params.course[:, 5]) / 5
 
     # find target speed
-    params.course[:, 6] = sqrt.(params.acc_lat_max * params.g ./ abs.(params.course[:, 4]))
+    params.course[:, 6] = sqrt.(params.acc_max * params.g ./ abs.(params.course[:, 4]))
     params.course[params.course[:, 6].>params.maxv, 6] .= params.maxv
 
     # bb=params.course[:, 6]
 
     for i in size(params.course, 1):-1:2
 
-        temp = (params.acc_lat_max * params.g / params.course[i, 6] )^2 - (params.course[i, 6] * params.course[i, 4])^2
+        temp = (params.acc_max * params.g / params.course[i, 6] )^2 - (params.course[i, 6] * params.course[i, 4])^2
         temp < 0 && (temp = 0)
 
         v_temp = 5 * sqrt(temp) + params.course[i, 6]
@@ -576,7 +576,7 @@ function track!(params)
 
     for i in 1:size(params.course, 1)-1
 
-        temp = (params.acc_lat_max * params.g/ params.course[i, 6] )^2 - (params.course[i, 6] * params.course[i, 4])^2
+        temp = (params.acc_max * params.g/ params.course[i, 6] )^2 - (params.course[i, 6] * params.course[i, 4])^2
         temp < 0 && (temp = 0)
 
         v_temp = 5 * sqrt(temp) + params.course[i, 6]
@@ -587,6 +587,7 @@ function track!(params)
         end
     end
 
+end
 
     # find dv/ds, divide by 5 because that's the ds.  Make this better!!!
     # params.course[:, 7] = [diff(params.course[:, 6]) / 5; 0]
@@ -596,11 +597,6 @@ function track!(params)
     # aa =  sqrt.(params.course[:, 8] .^ 2 + (params.course[:, 6] .^2 .* params.course[:, 4]) .^ 2) 
 
     # display(plot(params.course[:,3], [params.course[:, 6] params.course[:, 8]    params.course[:, 6] .^2 .* params.course[:, 4] aa bb] ))
-
-end
-
-
-
 
     # for i in size(params.course, 1)-1:-1:1
     #     temp = sqrt(params.course[i+1, 6]^2 + 2 * 5 * params.acc_brake_max * params.g)  ## 2ad, d=5
