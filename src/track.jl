@@ -1,4 +1,4 @@
-function track!(params)
+function track!(params::EoM_F463.props)
 
     # x y z
     params.course = [
@@ -563,11 +563,11 @@ function track!(params)
 
     for i in size(params.course, 1):-1:2
 
-        temp = (params.acc_max * params.g / params.course[i, 6] )^2 - (params.course[i, 6] * params.course[i, 4])^2
+        temp = (params.acc_max * params.g / params.course[i, 6])^2 - (params.course[i, 6] * params.course[i, 4])^2
         temp < 0 && (temp = 0)
 
         v_temp = 5 * sqrt(temp) + params.course[i, 6]
- 
+
         # look for areas where a is too big, adjust target v in previous s as necessary
         if params.course[i-1, 6] > v_temp
             params.course[i-1, 6] = v_temp
@@ -576,51 +576,17 @@ function track!(params)
 
     for i in 1:size(params.course, 1)-1
 
-        temp = (params.acc_max * params.g/ params.course[i, 6] )^2 - (params.course[i, 6] * params.course[i, 4])^2
+        temp = (params.acc_max * params.g / params.course[i, 6])^2 - (params.course[i, 6] * params.course[i, 4])^2
         temp < 0 && (temp = 0)
 
         v_temp = 5 * sqrt(temp) + params.course[i, 6]
- 
+
         # look for areas where a is too big, adjust target v in previous s as necessary
         if params.course[i+1, 6] > v_temp
             params.course[i+1, 6] = v_temp
         end
     end
-
 end
-
-    # find dv/ds, divide by 5 because that's the ds.  Make this better!!!
-    # params.course[:, 7] = [diff(params.course[:, 6]) / 5; 0]
-    # v * dv/ds = a
-    # params.course[:, 8] = params.course[:, 6] .* params.course[:, 7]
-
-    # aa =  sqrt.(params.course[:, 8] .^ 2 + (params.course[:, 6] .^2 .* params.course[:, 4]) .^ 2) 
-
-    # display(plot(params.course[:,3], [params.course[:, 6] params.course[:, 8]    params.course[:, 6] .^2 .* params.course[:, 4] aa bb] ))
-
-    # for i in size(params.course, 1)-1:-1:1
-    #     temp = sqrt(params.course[i+1, 6]^2 + 2 * 5 * params.acc_brake_max * params.g)  ## 2ad, d=5
-
-    #     # look for areas where a is too big, adjust target v in previous s as necessary
-    #     if params.course[i, 6] > temp
-    #         params.course[i, 6] = temp
-    #     end
-    #     params.course[i, 7] = (params.course[i+1, 6] - params.course[i, 6]) / 5
-    #     params.course[i, 8] = params.course[i, 6] * params.course[i, 7]
-    # end
-
-    # for i in 1:size(params.course, 1)-1
-    #     temp = sqrt(params.course[i, 6]^2 + 2 * 5 * params.acc_drive_max * params.g)  ## 2ad, d=5
-    #     if params.course[i+1, 6] > temp
-    #         params.course[i+1, 6] = temp
-    #     end
-    #     params.course[i, 7] = (params.course[i+1, 6] - params.course[i, 6]) / 5
-    #     params.course[i, 8] = params.course[i, 6] * params.course[i, 7]
-    # end
-
-
-
-
 
 # old from matlab, filter noise from track
 #[B,A]=butter(6,0.3);

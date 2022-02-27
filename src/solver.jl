@@ -18,7 +18,7 @@ function dist_to_end(z, t, integrator)
 end
 
 # function to launch ode solver
-function solver(params)
+function solver(params::EoM_F463.props)
 
     println("Gathered data. Simulating...")
 
@@ -40,16 +40,13 @@ function solver(params)
         callback = cb,
         progress = true,
     )
-    #,alg_hint=:stiff)
 
     # recalculate extra derivative data (accelerations)
     # define empty vector of vectors, call ode function
-
     yout = [zeros(25) for i in sol.t]
-    for i = 1:length(sol.t)
+    for i in 1:length(sol.t)
         eqn_of_motion(yout[i], sol.u[i], params, sol.t[i], flag = true)
     end
 
     sol, yout
-
 end

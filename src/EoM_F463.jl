@@ -22,6 +22,8 @@ export susp
 export input_F463
 export F463_animate
 
+include("vehicle_specs.jl") # this will define the custom variable type called 'props' that holds all the default values of the vehicle, driver, and track parameters
+
 include("solver.jl") # high level solver
 include("prelim.jl") # compute shift points
 include("eqn_of_motion.jl") # equations of motion, driver model
@@ -30,8 +32,6 @@ include("track.jl")  # define the track
 include("track_offset.jl") # track location
 include("plot_results.jl") # plot results
 include("F463_animate.jl") # the function to save the animation of time history
-
-include("vehicle_specs.jl") # this will define the custom variable type called 'props' that holds all the default values of the vehicle, driver, and track parameters
 
 include("input_F463.jl")
 include("build_model.jl")

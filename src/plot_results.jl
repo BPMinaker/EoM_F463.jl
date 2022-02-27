@@ -18,7 +18,7 @@ function plot_results(sol, yout, p, group_ID, params; disp = true)
     x = params.r_orth * res[7:20, :]
     w = params.r_orth * res[21:end, :]
 
-    x[3,:] .+= params.hg
+    x[3, :] .+= params.hg
 
     writedlm(joinpath(out, "time_history.txt"), [sol.t res[1:2, :]' x[3:5, :]' res[3, :]])
 

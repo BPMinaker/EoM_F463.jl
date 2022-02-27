@@ -67,7 +67,7 @@ function eqn_of_motion(zdot, z, params, t; flag = false)
     fi = zeros(n)  # Preallocate space, faster
     pdot = zeros(n)
 
-    for i = 1:17  # Loop over bodies
+    for i in 1:17  # Loop over bodies
         lin = 6 * i .+ (-5:-3)
         rot = 6 * i .+ (-2:0)
 
@@ -84,7 +84,7 @@ function eqn_of_motion(zdot, z, params, t; flag = false)
     steer = zeros(4)
     wheel_bounce = zeros(4)
 
-    for i = 1:length(params.wheelnum)
+    for i in 1:length(params.wheelnum)
         lin = 6 * params.wheelnum[i] .+ (-5:-3)
         rot = 6 * params.wheelnum[i] .+ (-2:0)
 
@@ -108,7 +108,7 @@ function eqn_of_motion(zdot, z, params, t; flag = false)
     # display(nrm_frc)
     vert_frc = zeros(length(nrm_frc))
     for i in 1:length(nrm_frc)
-        if nrm_frc[i] < 0 
+        if nrm_frc[i] < 0
             vert_frc[i] = -nrm_frc[i] # Add in the positve vertical tire force on the wheel to cancel the tension in the tire
             nrm_frc[i] = eps(1.0) # Set nrm_frc to almost zero so tire surface forces go to almost zero, not zero to avoid div by zero error in tire model 
         end
