@@ -123,8 +123,9 @@ function F463_animate(lptime, nums; filename = "history.html")
         tme = ""
 
         # load data
-        grp = nums_win[i] # student numbers for each winner
-        folder = "$(grp[1])_$(grp[2])" # locate the corresponding folder according to winners' ID
+#        grp = nums_win[i] # student numbers for each winner
+#        folder = "$(grp[1])_$(grp[2])" # locate the corresponding folder according to winners' ID
+        folder =  nums_win[i][1]
         time_hstr = readdlm(joinpath("results", folder, "time_history.txt")) # read the data
         tout = time_hstr[:, 1] # real time
         lcn = time_hstr[:, 2:4]' # location

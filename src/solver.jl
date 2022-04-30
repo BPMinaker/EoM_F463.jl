@@ -23,7 +23,7 @@ function solver(params::EoM_F463.props)
     println("Gathered data. Simulating...")
 
     # set max end time and plot interval
-    tend = 175
+    tend = 175.0
     tspan = (0.0, tend)
     x0 = zeros(6 + 28)
 

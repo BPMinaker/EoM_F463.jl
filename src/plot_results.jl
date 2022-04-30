@@ -1,4 +1,4 @@
-function plot_results(sol, yout, p, group_ID, params; disp = true)
+function plot_results(sol, yout, p, group, params; disp = true)
 
     plotly()
 
@@ -7,8 +7,9 @@ function plot_results(sol, yout, p, group_ID, params; disp = true)
     out = "results"
     ~isdir(out) && (mkdir(out))
 
-    tmstr = "$(group_ID[1])_$(group_ID[2])"
-    out = joinpath("results", tmstr)
+#    tmstr = "$(group_ID[1])_$(group_ID[2])"
+#    out = joinpath("results", tmstr)
+    out = joinpath("results", group)
     ~isdir(out) && (mkdir(out))
 
     # combine the results into a matrix
