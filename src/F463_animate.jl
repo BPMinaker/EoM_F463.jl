@@ -1,4 +1,4 @@
-function F463_animate(lptime, nums; filename = "history.html")
+function F463_animate(lptime, groups; filename = "history.html")
 
     ##
     ## This program is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@ function F463_animate(lptime, nums; filename = "history.html")
 
     #locate first three ranks in the results
     v_win = partialsortperm(lptime, 1:nt) # sort out the three least laptime and locate the index
-    nums_win = nums[v_win] # find the correspond student_ID for three winners
+    group_win = groups[v_win] # find the correspond student_ID for three winners
     laptime = lptime[v_win] # same as above for laptimes
 
     #    println(laptime)
@@ -122,10 +122,9 @@ function F463_animate(lptime, nums; filename = "history.html")
         rntn = "" # rotation history
         tme = ""
 
-        # load data
-#        grp = nums_win[i] # student numbers for each winner
-#        folder = "$(grp[1])_$(grp[2])" # locate the corresponding folder according to winners' ID
-        folder =  nums_win[i][1]
+        # load data for each winner
+         # locate the corresponding folder according to winners group
+        folder =  group_win[i]
         time_hstr = readdlm(joinpath("results", folder, "time_history.txt")) # read the data
         tout = time_hstr[:, 1] # real time
         lcn = time_hstr[:, 2:4]' # location
