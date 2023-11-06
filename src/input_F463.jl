@@ -479,7 +479,7 @@ function input_F463(params;u=0)
     item.location[1] = [-params.b,params.rear.t/2,params.rad]
     item.location[2] = [-params.b,params.rear.t/2-0.1,params.rad]
     item.twist = 1
-    item.units = "Nm"
+    item.units = "N*m"
     add_item!(item,the_system)
 
     item = actuator("LR axle torque")
@@ -488,7 +488,7 @@ function input_F463(params;u=0)
     item.location[1] = [-params.b,params.rear.t/2,params.rad]
     item.location[2] = [-params.b,params.rear.t/2-0.1,params.rad]
     item.twist = 1
-    item.units = "Nm"
+    item.units = "N*m"
     add_item!(item,the_system)
 
     item = sensor("LR Tire u")
